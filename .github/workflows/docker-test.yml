@@ -1,0 +1,27 @@
+name: Docker CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  docker-test:
+    runs-on : ubuntu-latest
+
+    steps:
+      -name:ソース取得
+        uses: actions/checkout@v4
+
+      -name:Dockerイメージビルド
+        run: docker build -t learn-project .
+      
+      -name:コンテナ起動
+        run: docker run -d -p 8777:8000 --name learn-project-container learn-project
+
+      -name:起動待ち
+        run: sleep 10
+      
+      -name:APIテスト
+        run: curl --fail http://localhost:8777 
