@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Dockerイメージビルド
-        run: docker build -t learn-project .
+        run: docker build -f app/Dockerfile -t learn-project app
 
       - name: コンテナ起動
         run: docker run -d -p 8777:8000 --name learn-project-container learn-project
