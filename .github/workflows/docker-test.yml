@@ -21,8 +21,17 @@ jobs:
       - name: コンテナ起動
         run: docker run -d -p 8777:8000 --name learn-project-container learn-project
 
-      - name: 起動待ち
-        run: sleep 10
+      # - name: 起動待ち
+      #   run: sleep 10
 
-      - name: APIテスト
-        run: curl --fail http://localhost:8777
+      - name: 起動待ち&&APIテスト
+        run: |
+          for i in {1..15}; do
+            curl --fail http://localhost:8777 && exit 0
+            sleep 3
+          done
+          docker compose logs
+          exit 1
+
+      # - name: APIテスト
+      #   run: curl --fail http://localhost:8777
